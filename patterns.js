@@ -4,6 +4,9 @@ class Pattern {
     this.spots = Array(size).fill(0).map(() => [0, 0]);
     // prettier-ignore
     this.speeds = Array(size).fill(0).map(() => [0, 0]);
+    // prettier-ignore
+    this.colors = 'white';
+
     this.running = false
   }
 
@@ -58,9 +61,16 @@ class Pattern {
     this.renderReset()
     this.moveAll(d)
 
-    ctx.fillStyle = 'white'
-    for (let spot of this.spots) {
-      ctx.fillRect(...spot, 5, 5)
+    const isColorsArray = Array.isArray(this.colors)
+    if (!isColorsArray) {
+      ctx.fillStyle = this.colors
+    }
+    for (let i in this.spots) {
+      if (isColorsArray) {
+        ctx.fillStyle = this.colors[i]
+      }
+
+      ctx.fillRect(...this.spots[i], 5, 5)
     }
   }
 }
@@ -83,12 +93,21 @@ class RandomPattern extends Pattern {
 }
 
 class ScanningPattern extends Pattern {
-  constructor(size = 50) {
+  constructor(size = 30) {
     super(size)
+
+    // good bright colors - picked at random
+    const goodColors = ['red', 'yellow', 'green', 'pink']
+
+    this.colors = []
 
     for (let i = 0; i < size; i++) {
       this.spots[i] = [randomX(), 0]
-      this.speeds[i] = [random(100, 2000) * randomFlip(), canvas.height / 2]
+      this.speeds[i] = [
+        random(canvas.width, canvas.width / 2) * randomFlip(),
+        canvas.height / 2,
+      ]
+      this.colors.push(goodColors[random(goodColors.length)])
     }
   }
 }
