@@ -82,3 +82,14 @@ class RandomPattern extends Pattern {
     }
   }
 }
+
+class ScanningPattern extends Pattern {
+  constructor(size = 50) {
+    super(size)
+
+    for (let i = 0; i < size; i++) {
+      this.spots[i] = [randomX(), 0]
+      this.speeds[i] = [random(100, 2000) * randomFlip(), canvas.height / 2]
+    }
+  }
+}
