@@ -47,6 +47,18 @@ function changePattern(i) {
 document.body.addEventListener('keydown', ({key}) => {
   if (!isNaN(key)) {
     changePattern(+key)
+    return
+  }
+
+  if (!pattern) return
+
+  switch (key) {
+    case 'C':
+      pattern.colors = 'white'
+      break
+    case 'c':
+      pattern.giveRandomColors()
+      break
   }
 })
 </script>
