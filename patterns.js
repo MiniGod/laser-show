@@ -80,7 +80,9 @@ class Pattern {
         ctx.fillStyle = this.colors[i]
       }
 
-      ctx.fillRect(...this.spots[i], 5, 5)
+      ctx.beginPath()
+      ctx.arc(...this.spots[i], 5, 0, Math.PI * 2)
+      ctx.fill()
     }
   }
 }
