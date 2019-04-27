@@ -23,8 +23,32 @@ const randomFlip = () => ((random(2) + 1) * 2) - 3
 </script>
 <script src="patterns.js"></script>
 <script>
-const pattern = new ScanningPattern();
-pattern.start()
+const patterns = [,RandomPattern, ScanningPattern];
+let pattern;
+changePattern(0)
+
+function changePattern(i) {
+  if (pattern) pattern.stop()
+
+  if (!patterns[i]) {
+    pattern = null
+
+    // Draw gray to show invalid
+    ctx.fillStyle = '#444'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    return
+  }
+
+  pattern = new patterns[i]()
+  pattern.start();
+}
+
+document.body.addEventListener('keydown', ({key}) => {
+  if (!isNaN(key)) {
+    changePattern(+key)
+  }
+})
 </script>
 </body>
 </html>

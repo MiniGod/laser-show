@@ -45,14 +45,13 @@ class Pattern {
   }
 
   preRender() {
+    if (!this.running) return
     const d = (Date.now() - this.t) / 1000
     this.t = Date.now()
 
     this.render(d)
 
-    if (this.running) {
-      window.requestAnimationFrame(this.preRender.bind(this))
-    }
+    window.requestAnimationFrame(this.preRender.bind(this))
   }
 
   render(d) {
