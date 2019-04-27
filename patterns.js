@@ -88,7 +88,7 @@ class Pattern {
 }
 
 class RandomPattern extends Pattern {
-  constructor(size = 100) {
+  constructor(size = 50) {
     super(size)
 
     for (let i = 0; i < size; i++) {
@@ -105,7 +105,7 @@ class RandomPattern extends Pattern {
 }
 
 class ScanningPattern extends Pattern {
-  constructor(size = 30) {
+  constructor(size = 50) {
     super(size)
 
     this.giveRandomColors()
@@ -114,7 +114,7 @@ class ScanningPattern extends Pattern {
       this.spots[i] = [randomX(), 0]
       this.speeds[i] = [
         random(canvas.width, canvas.width / 2) * randomFlip(),
-        canvas.height / 2,
+        canvas.height * 2,
       ]
     }
   }
