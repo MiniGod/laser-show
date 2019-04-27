@@ -1,5 +1,6 @@
 class Pattern {
   constructor(size) {
+    this.size = size
     // prettier-ignore
     this.spots = Array(size).fill(0).map(() => [0, 0]);
     // prettier-ignore
@@ -7,7 +8,16 @@ class Pattern {
     // prettier-ignore
     this.colors = 'white';
 
+    // good bright colors - can be used in patterns
+    this.goodColors = ['red', 'yellow', 'green', 'pink']
+
     this.running = false
+  }
+
+  giveRandomColors() {
+    this.colors = Array(this.size)
+      .fill(0)
+      .map(() => this.goodColors[random(this.goodColors.length)])
   }
 
   start() {
@@ -96,10 +106,7 @@ class ScanningPattern extends Pattern {
   constructor(size = 30) {
     super(size)
 
-    // good bright colors - picked at random
-    const goodColors = ['red', 'yellow', 'green', 'pink']
-
-    this.colors = []
+    this.giveRandomColors()
 
     for (let i = 0; i < size; i++) {
       this.spots[i] = [randomX(), 0]
@@ -107,7 +114,28 @@ class ScanningPattern extends Pattern {
         random(canvas.width, canvas.width / 2) * randomFlip(),
         canvas.height / 2,
       ]
-      this.colors.push(goodColors[random(goodColors.length)])
+    }
+  }
+}
+
+class ExplosionPattern extends Pattern {
+  constructor(size = 100) {
+    super(size)
+
+    this.giveRandomColors()
+
+    const x = (canvas.width / 2) | 0
+    const y = (canvas.height / 2) | 0
+    const speed = Math.min(x, y) / 0.5 // extend to the closes edge of the screen in 0.5s
+
+    for (let i = 0; i < size; i++) {
+      this.spots[i] = [x, y]
+
+      const direction = Math.PI * 2 * (i / size)
+      this.speeds[i] = [
+        speed * Math.sin(direction),
+        speed * Math.cos(direction),
+      ]
     }
   }
 }
